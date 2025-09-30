@@ -1,0 +1,189 @@
+# ===========================
+# MACHINE LEARNING PROJECT
+# Comprehensive .gitignore
+# ===========================
+
+# Python Environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+conda-meta/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*-checkpoint.ipynb
+
+# Data Files & Datasets
+datasets/
+data/
+raw_data/
+processed_data/
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.json
+*.parquet
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.npz
+*.npy
+
+# Model Files
+models/
+*.model
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.pt
+*.pth
+*.safetensors
+checkpoints/
+saved_models/
+
+# Generated Plots & Visualizations
+plots/
+figures/
+images/
+visualizations/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.eps
+
+# Logs & Reports
+logs/
+*.log
+*.out
+*.err
+mlruns/
+wandb/
+tensorboard_logs/
+reports/
+*.html
+
+# Cache & Temporary Files
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.nyc_output
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.spyderproject
+.spyproject
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Configuration Files (sensitive)
+config.ini
+secrets.yaml
+credentials.json
+*.key
+*.pem
+
+# Large Files (consider using Git LFS)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Backup Files
+*.bak
+*.backup
+*.old
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Compiled Code
+*.o
+*.a
+*.la
+*.lo
+*.slo
+*.ko
+*.obj
+*.elf
+*.exe
+*.dll
+
+# Documentation Build
+docs/_build/
+site/
+
+# Testing
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Pytype static type analyzer
+.pytype/
