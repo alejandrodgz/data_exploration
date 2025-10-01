@@ -41,6 +41,7 @@ def load_crop_data(dataset_dir="datasets", force_download=False):
         # Descargar dataset desde Kaggle
         print("📥 Descargando dataset desde Kaggle...")
         download_path = kagglehub.dataset_download("madhuraatmarambhagat/crop-recommendation-dataset")
+        #download_path = kagglehub.dataset_download("samuelotiattakorah/agriculture-crop-yield")
         print(f"✅ Dataset descargado en: {download_path}")
         
         # Buscar el archivo CSV en la estructura descargada

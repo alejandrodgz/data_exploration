@@ -47,7 +47,7 @@ python312/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 notebooks/*.py
-
+notebooks/datasets
 
 # ==================================================
 # DATOS
