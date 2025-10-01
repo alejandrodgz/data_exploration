@@ -133,6 +133,23 @@ for col in ['rainfall', 'humidity', 'temperature']:
 
 analyze_categorical(crop_data, 'label', 'temperature')
 
-correlation_analysis(crop_data, 'P')
+correlation_analysis(crop_data)
+
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+import pandas as pd
+
+X = crop_data[['N','P','K','temperature','humidity','ph','rainfall']].dropna()
+vif = pd.DataFrame({
+    'feature': X.columns,
+    'VIF': [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+})
+print(vif.sort_values('VIF', ascending=False))
+
+from sklearn.feature_selection import mutual_info_classif
+X = crop_data[['N','P','K','temperature','humidity','ph','rainfall']]
+y = crop_data['label']  # tu etiqueta de cultivo
+mi = mutual_info_classif(X, y, discrete_features=False, random_state=0)
+print(pd.Series(mi, index=X.columns).sort_values(ascending=False))
+
 
 outliers_iqr, outliers_zscore, outliers_iso = detect_outliers(crop_data)
