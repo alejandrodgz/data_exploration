@@ -23,26 +23,11 @@ Predecir el cultivo óptimo para sembrar considerando:
 ```
 proyecto-recomendacion-cultivos/
 │
-├── README.md                          # Este archivo
-├── requirements.txt                   # Dependencias de Python
-│
-├── datos/
-│   ├── crudos/                       # Dataset original
-│   │   └── Crop_recommendation.csv
-│   ├── procesados/                   # Datos preparados
-│   │   ├── X_train.csv
-│   │   ├── X_test.csv
-│   │   ├── y_train.csv
-│   │   └── y_test.csv
-│   └── externos/                     # Datos de referencia (opcional)
+├── README.md                         # Este archivo
+├── requirements.txt                  # Dependencias de Python
 │
 ├── notebooks/
-│   ├── 1_comprension_negocio.ipynb   # Fase 1 CRISP-DM
-│   ├── 2_comprension_datos.ipynb     # Fase 2 CRISP-DM (EDA)
-│   ├── 3_preparacion_datos.ipynb     # Fase 3 CRISP-DM
-│   ├── 4_modelado.ipynb              # Fase 4 CRISP-DM
-│   ├── 5_evaluacion.ipynb            # Fase 5 CRISP-DM
-│   └── 6_despliegue.ipynb            # Fase 6 CRISP-DM
+│   ├── 1_bu_du_eda.ipynb             # Fase 1 CRISP-DM
 │
 ├── src/
 │   ├── __init__.py
@@ -60,17 +45,14 @@ proyecto-recomendacion-cultivos/
 │   ├── figuras/                      # Visualizaciones
 │   ├── reporte_entrega1.pdf
 │   ├── reporte_entrega2.pdf
-│   └── reporte_final.pdf
-│
-└── despliegue/                       # Scripts de producción (opcional)
-    └── app.py
+    └── reporte_final.pdf
 ```
 
 ## 🚀 Inicio Rápido
 
 ### 1️⃣ Requisitos Previos
 
-- Python 3.8 o superior
+- Python 3.12 o superior
 - pip (gestor de paquetes de Python)
 - Git
 
@@ -94,13 +76,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Descargar el Dataset
-
-1. Ir a [Kaggle - Crop Recommendation Dataset](https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset)
-2. Descargar `Crop_recommendation.csv`
-3. Colocar el archivo en `datos/crudos/`
-
-### 4️⃣ Ejecutar los Notebooks
+### 3️⃣ Ejecutar los Notebooks
 
 ```bash
 # Iniciar Jupyter Notebook
