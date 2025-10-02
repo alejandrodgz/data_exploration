@@ -1,86 +1,95 @@
 import matplotlib.pyplot as plt
-import os
+import pandas as pd
+import numpy as np
 
-# Configure matplotlib for non-interactive backend
-plt.switch_backend('Agg')
 
-def analyze_categorical(df, cat_col, target_col, save_plots=True, output_dir='plots'):
-    """Análisis completo de variable categórica"""
-    
-    if save_plots:
-        # Create output directory if it doesn't exist
-        os.makedirs(output_dir, exist_ok=True)
-    
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    
-    # 1. Distribución de categorías
-    ax1 = axes[0, 0]
-    counts = df[cat_col].value_counts()
-    ax1.bar(counts.index, counts.values, color=plt.cm.Set3(range(len(counts))))
-    ax1.set_title(f'Distribución de {cat_col}')
-    ax1.set_xlabel(cat_col)
-    ax1.set_ylabel('Frecuencia')
-    ax1.tick_params(axis='x', rotation=45)
-    
-    # Agregar porcentajes
-    for i, (idx, val) in enumerate(counts.items()):
-        ax1.text(i, val, f'{val}\n({val/len(df)*100:.1f}%)', 
-                ha='center', va='bottom')
-    
-    # 2. Pie chart
-    ax2 = axes[0, 1]
-    ax2.pie(counts.values, labels=counts.index, autopct='%1.1f%%',
-            colors=plt.cm.Set3(range(len(counts))))
-    ax2.set_title(f'Proporción de {cat_col}')
-    
-    # 3. Boxplot por categoría
-    ax3 = axes[1, 0]
-    df.boxplot(column=target_col, by=cat_col, ax=ax3)
-    ax3.set_title(f'{target_col} por {cat_col}')
-    ax3.set_xlabel(cat_col)
-    ax3.set_ylabel(target_col)
-    plt.sca(ax3)
-    plt.xticks(rotation=45)
-    
-    # 4. Estadísticas por categoría
-    ax4 = axes[1, 1]
-    ax4.axis('off')
-    
-    stats_by_cat = df.groupby(cat_col)[target_col].agg([
-        'count', 'mean', 'median', 'std'
-    ]).round(2)
-    
-    table_data = []
-    for idx, row in stats_by_cat.iterrows():
-        table_data.append([idx, f"{row['count']:.0f}", 
-                          f"${row['mean']:,.0f}", 
-                          f"${row['median']:,.0f}",
-                          f"${row['std']:,.0f}"])
-    
-    table = ax4.table(cellText=table_data,
-                     colLabels=['Categoría', 'N', 'Media', 'Mediana', 'Desv.Est.'],
-                     cellLoc='center',
-                     loc='center',
-                     colWidths=[0.3, 0.15, 0.2, 0.2, 0.2])
-    table.auto_set_font_size(False)
-    table.set_fontsize(10)
-    table.scale(1.2, 1.5)
-    
-    # Colorear encabezados
-    for i in range(5):
-        table[(0, i)].set_facecolor('#40E0D0')
-        table[(0, i)].set_text_props(weight='bold')
-    
-    plt.suptitle(f'Análisis de Variable Categórica: {cat_col}', 
-                fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    
-    if save_plots:
-        # Save plot with descriptive filename
-        plot_filename = f'categorical_analysis_{cat_col.replace(" ", "_").lower()}_vs_{target_col.replace(" ", "_").lower()}.png'
-        plot_path = os.path.join(output_dir, plot_filename)
-        plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-        plt.close()  # Close the figure to free memory
-        print(f"📊 Análisis categórico de '{cat_col}' vs '{target_col}' guardado en: {plot_path}")
+def analyze_categorical(df, cat_col):
+    # %% [markdown]
+    # ###  Variable Categórica (Target)
+
+    # %%
+    # Análisis de la variable objetivo (label)
+    print(f"\n{'='*60}")
+    print(f"ANÁLISIS UNIVARIABLE: {cat_col} (Variable Objetivo)")
+    print(f"{'='*60}")
+
+    # Frecuencias
+    freq_cultivos = df[cat_col].value_counts()
+    freq_relativa = df[cat_col].value_counts(normalize=True)
+
+    print("\n1. Tabla de Frecuencias:")
+    tabla_freq = pd.DataFrame({
+        'Frecuencia Absoluta': freq_cultivos,
+        'Frecuencia Relativa': freq_relativa,
+        'Porcentaje': freq_relativa * 100
+    })
+    print(tabla_freq)
+
+    # Moda
+    moda = df[cat_col].mode()
+    if freq_cultivos.nunique() == 1:
+        print("\n2. Moda (cultivo más frecuente): No hay moda, todas las clases tienen la misma frecuencia.")
     else:
-        plt.show()
+        print(f"\n2. Moda (cultivo más frecuente): {', '.join(moda.astype(str))}")
+
+
+    # Balance de clases
+    ratio_desbalance = freq_cultivos.max() / freq_cultivos.min()
+    print(f"\n3. Balance de Clases:")
+    print(f"   Cultivo más frecuente: {freq_cultivos.idxmax()} ({freq_cultivos.max()} muestras)")
+    print(f"   Cultivo menos frecuente: {freq_cultivos.idxmin()} ({freq_cultivos.min()} muestras)")
+    print(f"   Razón de desbalance: {ratio_desbalance:.2f}:1")
+    print(f"   Interpretación: ", end="")
+    if freq_cultivos.nunique() == 1:
+        print("Clases perfectamente balanceadas")
+    elif ratio_desbalance < 1.5:
+        print("Clases balanceadas")
+    elif ratio_desbalance < 3:
+        print("Desbalance moderado")
+    else:
+        print("Desbalance alto - considerar técnicas de balanceo")
+
+
+    # Entropía (medida de incertidumbre)
+    from scipy.stats import entropy
+    entropia = entropy(freq_relativa)
+    entropia_max = np.log(len(freq_cultivos))
+    print(f"\n4. Entropía:")
+    print(f"   Entropía: {entropia:.3f}")
+    print(f"   Entropía máxima: {entropia_max:.3f}")
+    print(f"   Entropía normalizada: {entropia/entropia_max:.3f}")
+    print(f"   - Interpretación: ", end="")
+    if entropia/entropia_max > 0.9:
+        print("Alta diversidad, clases bien distribuidas")
+    else:
+        print("Baja diversidad, algunas clases dominan")
+
+    # %%
+    # Visualizaciones para variable categórica
+    plt.close('all') 
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+    # Gráfico de barras
+    freq_cultivos.plot(kind='bar', ax=axes[0], color='steelblue', edgecolor='black')
+    axes[0].set_title('Distribución de Cultivos - Gráfico de Barras', fontsize=14, fontweight='bold')
+    axes[0].set_xlabel('Tipo de Cultivo')
+    axes[0].set_ylabel('Frecuencia')
+    axes[0].tick_params(axis='x', rotation=45)
+    axes[0].grid(axis='y', alpha=0.3)
+
+    # Gráfico de pastel (top 10 para legibilidad)
+    top_10 = freq_cultivos.head(10)
+    otros = freq_cultivos[10:].sum()
+    if len(freq_cultivos) <= 20:
+        freq_plot = freq_cultivos
+    else:
+        top_10 = freq_cultivos.head(10)
+        otros = freq_cultivos[10:].sum()
+        freq_plot = pd.concat([top_10, pd.Series({'Otros': otros})])
+
+
+    axes[1].pie(freq_plot, labels=freq_plot.index, autopct='%1.1f%%', startangle=90)
+    axes[1].set_title('Distribución de Cultivos - Gráfico de Pastel', fontsize=14, fontweight='bold')
+
+    plt.tight_layout()
+    plt.show()
