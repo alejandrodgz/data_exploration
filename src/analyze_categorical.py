@@ -66,7 +66,7 @@ def analyze_categorical(df, cat_col):
 
     # %%
     # Visualizaciones para variable categórica
-    plt.close('all') 
+    plt.close('all')
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
     # Gráfico de barras
@@ -77,15 +77,15 @@ def analyze_categorical(df, cat_col):
     axes[0].tick_params(axis='x', rotation=45)
     axes[0].grid(axis='y', alpha=0.3)
 
-    # Gráfico de pastel (top 10 para legibilidad)
-    top_10 = freq_cultivos.head(10)
-    otros = freq_cultivos[10:].sum()
+    # Gráfico de pastel (top 11 para legibilidad)
+    top_11 = freq_cultivos.head(11)
+    otros = freq_cultivos[11:].sum()
     if len(freq_cultivos) <= 20:
         freq_plot = freq_cultivos
     else:
-        top_10 = freq_cultivos.head(10)
-        otros = freq_cultivos[10:].sum()
-        freq_plot = pd.concat([top_10, pd.Series({'Otros': otros})])
+        top_11 = freq_cultivos.head(11)
+        otros = freq_cultivos[11:].sum()
+        freq_plot = pd.concat([top_11, pd.Series({'Otros': otros})])
 
 
     axes[1].pie(freq_plot, labels=freq_plot.index, autopct='%1.1f%%', startangle=90)
