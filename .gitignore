@@ -1,19 +1,18 @@
-# ===========================
-# MACHINE LEARNING PROJECT
-# Comprehensive .gitignore
-# ===========================
+# Proyecto ML: Sistema de Recomendación de Cultivos
+# Archivos a ignorar en Git
 
-# Python Environment
-venv/
-env/
-ENV/
-.venv/
-.env/
-conda-meta/
+# ==================================================
+# PYTHON
+# ==================================================
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -27,163 +26,151 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-*-checkpoint.ipynb
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+python3.12/
+python312/
 
-# Data Files & Datasets
-datasets/
-data/
-raw_data/
-processed_data/
-*.csv
-*.tsv
-*.xlsx
-*.xls
-*.json
-*.parquet
-*.h5
-*.hdf5
-*.pkl
-*.pickle
-*.joblib
-*.npz
-*.npy
+# ==================================================
+# JUPYTER NOTEBOOK
+# ==================================================
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+notebooks/*.py
+notebooks/datasets
+notebooks/plots
 
-# Model Files
-models/
-*.model
-*.pkl
-*.joblib
-*.h5
-*.hdf5
-*.pb
-*.onnx
-*.pt
-*.pth
-*.safetensors
-checkpoints/
-saved_models/
+# ==================================================
+# DATOS
+# ==================================================
+# Ignorar datos crudos grandes (comentar si se desea versionar)
+datos/crudos/*.csv
+datos/crudos/*.xlsx
+datos/crudos/*.json
 
-# Generated Plots & Visualizations
-plots/
-figures/
-images/
-visualizations/
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.pdf
-*.eps
+# Ignorar datos procesados (se pueden regenerar)
+datos/procesados/*.csv
+datos/procesados/*.pkl
 
-# Logs & Reports
-logs/
-*.log
-*.out
-*.err
-mlruns/
-wandb/
-tensorboard_logs/
-reports/
-*.html
+# Ignorar datos externos
+datos/externos/*
 
-# Cache & Temporary Files
-.cache/
-.pytest_cache/
-.coverage
-htmlcov/
-.nyc_output
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
+# Excepción: mantener README en carpetas de datos
+!datos/crudos/README.md
+!datos/procesados/README.md
+!datos/externos/README.md
 
-# IDE & Editor Files
+# ==================================================
+# MODELOS
+# ==================================================
+# Modelos grandes (usar Git LFS si es necesario)
+modelos/*.h5
+modelos/*.hdf5
+modelos/*.pkl
+modelos/*.joblib
+modelos/*.pt
+modelos/*.pth
+
+# Excepción: mantener .gitkeep
+!modelos/.gitkeep
+
+# ==================================================
+# REPORTES Y FIGURAS
+# ==================================================
+# PDFs generados (versionar solo finales)
+reportes/*.pdf
+reportes/figuras/*.png
+reportes/figuras/*.jpg
+reportes/figuras/*.jpeg
+reportes/figuras/*.svg
+
+# Excepción: reportes finales de entregas
+!reportes/reporte_entrega1.pdf
+!reportes/reporte_entrega2.pdf
+!reportes/reporte_final.pdf
+
+# ==================================================
+# IDEs Y EDITORES
+# ==================================================
+# VS Code
 .vscode/
+*.code-workspace
+
+# PyCharm
 .idea/
+*.iml
+*.iws
+
+# Sublime Text
 *.sublime-project
 *.sublime-workspace
-.spyderproject
-.spyproject
 
-# OS Generated Files
+# Jupyter
+.jupyter/
+
+# ==================================================
+# SISTEMA OPERATIVO
+# ==================================================
+# macOS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+.AppleDouble
+.LSOverride
 
-# Environment Variables
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ==================================================
+# LOGS Y TEMPORALES
+# ==================================================
+*.log
+*.tmp
+*.temp
+logs/
+temp/
+
+# ==================================================
+# CREDENCIALES Y CONFIGURACIÓN
+# ==================================================
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Configuration Files (sensitive)
-config.ini
-secrets.yaml
-credentials.json
+.env.*.local
+config/secrets.yaml
 *.key
 *.pem
 
-# Large Files (consider using Git LFS)
+# ==================================================
+# OTROS
+# ==================================================
+# Archivos de backup
+*.bak
+*.backup
+*.swp
+*.swo
+
+# Archivos comprimidos
 *.zip
 *.tar.gz
 *.rar
-*.7z
 
-# Backup Files
-*.bak
-*.backup
-*.old
+# Excepción: mantener entregas finales
+!entregas/*.zip
 
-# Database Files
-*.db
-*.sqlite
-*.sqlite3
-
-# Compiled Code
-*.o
-*.a
-*.la
-*.lo
-*.slo
-*.ko
-*.obj
-*.elf
-*.exe
-*.dll
-
-# Documentation Build
-docs/_build/
-site/
-
-# Testing
-.tox/
-.nox/
-coverage.xml
-*.cover
-.hypothesis/
-
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# Pytype static type analyzer
-.pytype/
+# Solucion de conflictos
+*.orig
+*.*~

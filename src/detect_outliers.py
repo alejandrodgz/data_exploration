@@ -6,8 +6,6 @@ import seaborn as sns
 import pandas as pd
 import os
 
-# Configure matplotlib for non-interactive backend
-plt.switch_backend('Agg')
 
 def detect_outliers(df, save_plots=True, output_dir='plots'):
     """Detección de outliers usando múltiples métodos"""
@@ -40,6 +38,7 @@ def detect_outliers(df, save_plots=True, output_dir='plots'):
     outliers_iso = iso_forest.fit_predict(scaled_data) == -1
     
     # Visualización
+    plt.close('all')
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
     
     # Plot 1: Outliers por columna (IQR)
