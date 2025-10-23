@@ -148,7 +148,7 @@ print(vif.sort_values('VIF', ascending=False))
 from sklearn.feature_selection import mutual_info_classif
 X = crop_data[['N','P','K','temperature','humidity','ph','rainfall']]
 y = crop_data['label']  # tu etiqueta de cultivo
-mi = mutual_info_classif(X, y, discrete_features=False, random_state=0)
+mi = mutual_info_classif(X, y, discrete_features=False, random_state=42)
 print(pd.Series(mi, index=X.columns).sort_values(ascending=False))
 
 
