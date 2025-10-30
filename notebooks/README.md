@@ -59,6 +59,60 @@ Este notebook implementa y compara diferentes algoritmos de Machine Learning par
 3. Logistic Regression (Regresión Logística)
 4. XGBoost (Extreme Gradient Boosting)
 
+**Resultados:**
+- Mejor modelo: XGBoost (con hiperparámetros por defecto)
+- Performance inicial: ~99.5% accuracy
+- Enlace al notebook de optimización: `2.5_hyperparameter_optimization.ipynb`
+
+---
+
+### 2.5. `2.5_hyperparameter_optimization.ipynb` - Optimización de Hiperparámetros
+
+Este notebook se enfoca en la optimización sistemática de hiperparámetros de los modelos entrenados en el notebook 2, con el objetivo de mejorar el rendimiento del 99.55% al 99.8%+.
+
+**Contenido principal:**
+
+- **Técnicas de optimización**:
+  - GridSearchCV para Logistic Regression (búsqueda exhaustiva)
+  - RandomizedSearchCV para Decision Tree, Random Forest y XGBoost (búsqueda aleatoria)
+  - 5-Fold Cross-Validation para scores robustos
+
+- **Hiperparámetros optimizados**:
+  - **Logistic Regression**: C, penalty, solver
+  - **Decision Tree**: max_depth, min_samples_split, min_samples_leaf, criterion
+  - **Random Forest**: n_estimators, max_depth, min_samples_split, min_samples_leaf, max_features
+  - **XGBoost**: learning_rate, max_depth, n_estimators, subsample, colsample_bytree, gamma
+
+- **Comparación y selección**:
+  - Comparación de todos los modelos optimizados
+  - Visualizaciones de performance
+  - Selección automática del mejor modelo
+  - Guardado de modelos optimizados
+
+**Resultados de optimización:**
+
+🏆 **Modelo ganador: XGBoost**
+- CV Score: 99.60%
+- Test Accuracy: 99.32%
+- Test F1-Score: 99.33%
+
+**Hiperparámetros optimizados de XGBoost:**
+```python
+n_estimators=200        # Optimizado: 100 → 200
+max_depth=5             # Optimizado: 6 → 5
+learning_rate=0.1       # Sin cambio
+subsample=1.0           # Optimizado: agregado
+colsample_bytree=0.7    # Optimizado: 1.0 → 0.7
+gamma=0.1               # Optimizado: 0 → 0.1
+```
+
+**Conceptos clave explicados:**
+
+- **GridSearchCV vs RandomizedSearchCV**: Cuándo usar cada técnica
+- **K-Fold Cross-Validation**: Por qué es mejor que Hold-out simple
+- **Espacio de hiperparámetros**: Cómo definir rangos de búsqueda
+- **Validación sin data leakage**: Uso correcto del Test Set
+
 ---
 
 ## Modelos de Machine Learning Explicados
@@ -376,9 +430,45 @@ Para profundizar en Machine Learning, se recomiendan:
 
 ```
 notebooks/
-├── 1_crops_eda.ipynb           # Análisis Exploratorio de Datos
-├── 2_crops_modeling.ipynb      # Modelado y Evaluación
-└── README.md                   # Este archivo
+├── 1_crops_eda.ipynb                      # Análisis Exploratorio de Datos
+├── 2_crops_modeling.ipynb                 # Modelado y Evaluación (modelos base)
+├── 2.5_hyperparameter_optimization.ipynb  # Optimización de Hiperparámetros
+└── README.md                              # Este archivo
+```
+
+## Flujo de Trabajo del Proyecto
+
+```mermaid
+graph TD
+    A[1_crops_eda.ipynb<br/>Análisis Exploratorio] --> B[Comprensión de datos<br/>Calidad del dataset<br/>Decisiones de preprocesamiento]
+
+    B --> C[2_crops_modeling.ipynb<br/>Modelado Base]
+
+    C --> D[Modelos con hiperparámetros<br/>por defecto]
+    D --> E[Comparación inicial<br/>Performance ~99.5%]
+
+    E --> F[2.5_hyperparameter_optimization.ipynb<br/>Optimización]
+
+    F --> G[GridSearchCV<br/>Logistic Regression]
+    F --> H[RandomizedSearchCV<br/>Tree, RF, XGBoost]
+
+    G --> I[5-Fold Cross-Validation]
+    H --> I
+
+    I --> J[🏆 XGBoost Optimizado<br/>CV: 99.60%<br/>Test: 99.32%]
+
+    J --> K[3_crops_feature_engineering.ipynb<br/>Próximo paso]
+
+    K --> L[Nuevas features:<br/>interacciones, ratios]
+    L --> M[SHAP Analysis]
+    M --> N[Modelo Final<br/>Objetivo: 99.8%+]
+
+    style A fill:#e1f5ff
+    style C fill:#e1f5ff
+    style F fill:#fff4e1
+    style J fill:#d4edda
+    style K fill:#f8d7da
+    style N fill:#d4edda
 ```
 
 ---
